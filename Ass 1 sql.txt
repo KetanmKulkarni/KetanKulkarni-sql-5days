@@ -50,8 +50,8 @@ SQL> insert into Gym_members( id,name,age,joining_date,Expiration_date,cost,city
 
  select * from gymmembers where cost>4000;
 
- select * from gymmembers where city ='pune';
+ select * from gymmembers where city ='kolkata';
 
- select * from gymmembers where city ='pune' and age>23;
+ select * from gymmembers where city ='kolkata' and age>23;
 
  select * from gymmembers where MONTHS_BETWEEN(SYSDATE,joining_date) <=3;
