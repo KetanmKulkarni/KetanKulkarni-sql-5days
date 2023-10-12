@@ -173,3 +173,94 @@ EXPIRATION_DATE                CITY                               HEIGHT
          6 parmarth                     27 10-oct-2023
 11-feb-2024                    kolkata                               157
         56 12-OCT-23       3500
+
+#----Geting BMI----#
+
+SQL> select name, (weight/(height*height)) AS BMI from gymmembers;
+
+NAME                        BMI
+-------------------- ----------
+ketan                .002259814
+kavir                .003029778
+Rohan                .002497399
+Ankita               .002282688
+jay                  .002050493
+parmarth             .002271897
+
+6 rows selected.
+
+#-----All by Descending order----#
+
+SQL> select * from gymmembers ORDER BY Height DESC;
+
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+         1 ketan                        34 13-nov-2021
+14-dec-2023                    Delhi                                 176
+        70 12-OCT-23      15000
+
+         6 parmarth                     27 10-oct-2023
+11-feb-2024                    kolkata                               157
+        56 12-OCT-23       3500
+
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+
+         3 Rohan                        23 10-aug-2022
+06-jan-2024                    Mumbai                                155
+        60 12-OCT-23       7000
+
+         5 jay                          25 12-sep-2021
+20-may-2023                    surat                                 153
+
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+        48 12-OCT-23       2000
+
+         2 kavir                        34 13-oct-2021
+14-oct-2023                    Delhi                                 152
+        70 12-OCT-23       5000
+
+         4 Ankita                       21 10-sep-2021
+
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+15-jan-2023                    Nagpur                                148
+        50 12-OCT-23       9000
+
+#------getting birth_year from age-----#
+
+SQL>  Select name ,age ,(Extract(Year from sysdate)-age) As Birth_year from  gymmembers;
+
+NAME                        AGE BIRTH_YEAR
+-------------------- ---------- ----------
+ketan                        34       1989
+kavir                        34       1989
+Rohan                        23       2000
+Ankita                       21       2002
+jay                          25       1998
+parmarth                     27       1996
+
+6 rows selected.
+
+SQL>  Select name ,age ,(Extract(Year from sysdate)-age) As Birth_year from gymmembers where city='Mumbai';
+
+NAME                        AGE BIRTH_YEAR
+-------------------- ---------- ----------
+Rohan                        23       2000
