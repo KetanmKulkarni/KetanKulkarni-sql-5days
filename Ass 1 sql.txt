@@ -47,11 +47,129 @@ SQL> insert into Gym_members( id,name,age,joining_date,Expiration_date,cost,city
 
 
  select * from gYmmembers;
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+         1 ketan                        34 13-nov-2021
+14-dec-2023                    Delhi                                 176
+        70 12-OCT-23      15000
+
+         2 kavir                        34 13-oct-2021
+14-oct-2023                    Delhi                                 152
+        70 12-OCT-23       5000
+
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+
+         3 Rohan                        23 10-aug-2022
+06-jan-2024                    Mumbai                                155
+        60 12-OCT-23       7000
+
+         4 Ankita                       21 10-sep-2021
+15-jan-2023                    Nagpur                                148
+
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+        50 12-OCT-23       9000
+
+         5 jay                          25 12-sep-2021
+20-may-2023                    surat                                 153
+        48 12-OCT-23       2000
+
+         6 parmarth                     27 10-oct-2023
+
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+11-feb-2024                    kolkata                               157
+        56 12-OCT-23       3500
+
+
+6 rows selected.
 
  select * from gymmembers where cost>4000;
+  ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+         1 ketan                        34 13-nov-2021
+14-dec-2023                    Delhi                                 176
+        70 12-OCT-23      15000
+
+         2 kavir                        34 13-oct-2021
+14-oct-2023                    Delhi                                 152
+        70 12-OCT-23       5000
+
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+
+         3 Rohan                        23 10-aug-2022
+06-jan-2024                    Mumbai                                155
+        60 12-OCT-23       7000
+
+         4 Ankita                       21 10-sep-2021
+15-jan-2023                    Nagpur                                148
+
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+        50 12-OCT-23       9000
 
  select * from gymmembers where city ='kolkata';
+    ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+         6 parmarth                     27 10-oct-2023
+11-feb-2024                    kolkata                               157
+        56 12-OCT-23       3500
+
 
  select * from gymmembers where city ='kolkata' and age>23;
+      ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+         6 parmarth                     27 10-oct-2023
+11-feb-2024                    kolkata                               157
+        56 12-OCT-23       3500
+
 
  select * from gymmembers where MONTHS_BETWEEN(SYSDATE,joining_date) <=3;
+
+        ID NAME                        AGE JOINING_DATE
+---------- -------------------- ---------- ------------------------------
+EXPIRATION_DATE                CITY                               HEIGHT
+------------------------------ ------------------------------ ----------
+    WEIGHT CREATED_A       COST
+---------- --------- ----------
+         6 parmarth                     27 10-oct-2023
+11-feb-2024                    kolkata                               157
+        56 12-OCT-23       3500
