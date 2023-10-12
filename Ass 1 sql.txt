@@ -1,6 +1,6 @@
 * ---------creating Table-----*
 
-create table Gym_members(
+create table gymmembers(
   id number(4) primary key,
   name varchar2(20) not null,
   age number(3) not null check(age>0),
@@ -11,7 +11,7 @@ create table Gym_members(
   Weight number(30) not null,
   created_at Date default sysdate
 cost number(30) not null);
-
+Table created.
 * -------creating Sequence-------*
 
 create sequence Gym_seq
