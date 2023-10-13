@@ -264,3 +264,149 @@ SQL>  Select name ,age ,(Extract(Year from sysdate)-age) As Birth_year from gymm
 NAME                        AGE BIRTH_YEAR
 -------------------- ---------- ----------
 Rohan                        23       2000
+
+
+
+
+-----------------------------------------------DAY2------------------------------------------------------------------
+
+
+SQL> create table bookings(
+  2  id number(3) primary key,
+  3  name varchar2(30) not null,
+  4  room_no int,
+  5  check_in_date date not null,
+  6  check_out_date date not null,
+  7  discount number(30) not null,
+  8  total_price number(30) not null,
+  9  country varchar2(30) not null,
+ 10  created_at Date default sysdate
+ 11  );
+
+Table created.
+
+SQL> desc bookings;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(3)
+ NAME                                      NOT NULL VARCHAR2(30)
+ ROOM_NO                                            NUMBER(38)
+ CHECK_IN_DATE                             NOT NULL DATE
+ CHECK_OUT_DATE                            NOT NULL DATE
+ DISCOUNT                                  NOT NULL NUMBER(30)
+ TOTAL_PRICE                               NOT NULL NUMBER(30)
+ COUNTRY                                   NOT NULL VARCHAR2(30)
+ CREATED_AT                                         DATE
+
+SQL> set linesize200;
+SQL>
+SQL> create sequence booking_seq;
+
+Sequence created.
+
+SQL>  insert into bookings(id,name,room_no,check_in_date,check_out_date,discount,total_price,country)
+  2  values (booking_seq.nextval,'krtan',100,'13-nov-2021','15-nov-2021',10,5000,'india');
+
+1 row created.
+
+SQL>  insert into bookings(id,name,room_no,check_in_date,check_out_date,discount,total_price,country)
+  2  values (booking_seq.nextval,'rohan',107,'12-jan-2022','18-jan-2022',12,2000,'india');
+
+1 row created.
+
+SQL>   insert into bookings(id,name,room_no,check_in_date,check_out_date,discount,total_price,country)
+  2    values (booking_seq.nextval,'riya',30,'25-feb-2022','28-feb-2022',15,5000,'america');
+
+1 row created.
+
+SQL> insert into bookings(id,name,room_no,check_in_date,check_out_date,discount,total_price,country)
+  2  values (booking_seq.nextval,'jay',56,'24-mar-2022','31-mar-2022',20,7000,'uae');
+
+1 row created.
+
+SQL> insert into bookings(id,name,room_no,check_in_date,check_out_date,discount,total_price,country)
+  2  values (booking_seq.nextval,'priya',78,'6-may-2022','15-may-2022',30,5000,'iran');
+
+1 row created.
+
+SQL>  insert into bookings(id,name,room_no,check_in_date,check_out_date,discount,total_price,country)
+  2   values (booking_seq.nextval,'raj',90,'8-oct-2022','15-oct-2022',11,3500,'australia');
+
+1 row created.
+
+SQL>  insert into bookings(id,name,room_no,check_in_date,check_out_date,discount,total_price,country)
+  2  values (booking_seq.nextval,'pranav',108,'4-jan-2023','8-jan-2023',13,6500,'india');
+
+1 row created.
+
+SQL> insert into bookings(id,name,room_no,check_in_date,check_out_date,discount,total_price,country)
+  2  values (booking_seq.nextval,'rohit',39,'6-jun-2023','15-jun-2023',14,5200,'oman');
+
+1 row created.
+
+SQL> select * from bookings;
+
+        ID NAME                              ROOM_NO CHECK_IN_ CHECK_OUT   DISCOUNT TOTAL_PRICE COUNTRY                        CREATED_A
+---------- ------------------------------ ---------- --------- --------- ---------- ----------- ------------------------------ ---------
+         1 krtan                                 100 13-NOV-21 15-NOV-21         10        5000 india                          13-OCT-23
+         2 rohan                                 107 12-JAN-22 18-JAN-22         12        2000 india                          13-OCT-23
+         3 riya                                   30 25-FEB-22 28-FEB-22         15        5000 america                        13-OCT-23
+         4 jay                                    56 24-MAR-22 31-MAR-22         20        7000 uae                            13-OCT-23
+         5 priya                                  78 06-MAY-22 15-MAY-22         30        5000 iran                           13-OCT-23
+         6 raj                                    90 08-OCT-22 15-OCT-22         11        3500 australia                      13-OCT-23
+         7 pranav                                108 04-JAN-23 08-JAN-23         13        6500 india                          13-OCT-23
+         8 rohit                                  39 06-JUN-23 15-JUN-23         14        5200 oman                           13-OCT-23
+
+8 rows selected.
+SQL> select country, count(*) as people_count from bookings group by country;
+
+COUNTRY                        PEOPLE_COUNT
+------------------------------ ------------
+america                                   1
+oman                                      1
+australia                                 1
+iran                                      1
+india                                     3
+uae                                       1
+
+6 rows selected.
+SQL> select country,count(*)  from Bookings group by country order by count(*) DESC fetch first 1 rows only;
+
+COUNTRY                          COUNT(*)
+------------------------------ ----------
+india                                   3
+
+
+SQL> select * from bookings where extract(month from check_in_date) =6;
+
+        ID NAME                              ROOM_NO CHECK_IN_ CHECK_OUT   DISCOUNT TOTAL_PRICE COUNTRY                        CREATED_A
+---------- ------------------------------ ---------- --------- --------- ---------- ----------- ------------------------------ ---------
+         8 rohit                                  39 06-JUN-23 15-JUN-23       14        5200 oman                           13-OCT-23
+
+
+SQL> select * from bookings where(check_out_date - check_in_date) > 4;
+
+        ID NAME                              ROOM_NO CHECK_IN_ CHECK_OUT   DISCOUNT TOTAL_PRICE COUNTRY                        CREATED_A
+---------- ------------------------------ ---------- --------- --------- ---------- ----------- ------------------------------ ---------
+         2 rohan                                 107 12-JAN-22 18-JAN-22         12        2000 india                          13-OCT-23
+         4 jay                                    56 24-MAR-22 31-MAR-22         20        7000 uae                            13-OCT-23
+         5 priya                                  78 06-MAY-22 15-MAY-22         30        5000 iran                           13-OCT-23
+         6 raj                                    90 08-OCT-22 15-OCT-22         11        3500 australia                      13-OCT-23
+         8 rohit                                  39 06-JUN-23 15-JUN-23         14        5200 oman                           13-OCT-23
+
+
+SQL> select (check_out_date-check_in_date)*total_price - ((check_out_date-check_in_date)*total_price)*discount/100,name from bookings;
+
+(CHECK_OUT_DATE-CHECK_IN_DATE)*TOTAL_PRICE-((CHECK_OUT_DATE-CHECK_IN_DATE)*TOTAL_PRICE)*DISCOUNT/100 NAME
+---------------------------------------------------------------------------------------------------- ------------------------------
+                                                                                                9000 krtan
+                                                                                               10560 rohan
+                                                                                               12750 riya
+                                                                                               39200 jay
+                                                                                               31500 priya
+                                                                                               21805 raj
+                                                                                               22620 pranav
+                                                                                               40248 rohit
+
+8 rows selected.
+
