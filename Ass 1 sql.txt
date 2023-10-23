@@ -410,3 +410,449 @@ SQL> select (check_out_date-check_in_date)*total_price - ((check_out_date-check_
 
 8 rows selected.
 
+------------------------------------day3-----------------------------------------------------------------
+
+create table departments (
+  2  id number(10) primary key,
+  3  name varchar2(30) not null unique,
+  4  created_at date default sysdate
+  5  );
+
+create table employees (
+    id number(10) primary key,
+    name varchar2(30) not null ,
+    city varchar2(30) not null,
+    email varchar2(20) not null unique,
+    salary number(10) not null,
+    did number(10),
+    foreign key(did) references departments(id),
+    created_at date default sysdate
+  );
+
+create sequence dept_seq
+start with 1
+increment by 1
+
+create sequence emp_seq
+start with 1
+increment by 1
+
+
+insert into departments( id,name)
+    VALUES (dept_seq.nextval,'HR');
+
+insert into employees( id,name,city,email,salary,did)
+    VALUES (emp_seq.nextval,'Harshada','pune','harshada@gmail',35000,3);
+
+** JOINS***
+INNER JOIN
+  select d.name,e.name,email,city,salary from departments d inner join employees e on
+  d.id=e.did;
+
+LEFT OUTER JOIN
+  select d.id,d.name,e.id,e.name from departments d left outer join employees e on d.id=e.did;
+
+RIGHT OUTER JOIN
+   select d.id,d.name,e.id,e.name from departments d right outer join employees e on d.id=e.did;
+
+EQUI JOIN
+    select d.id,d.name,e.id,e.name from departments d,employees e where d.id=e.did;
+
+   select d.id,d.name,e.id,e.name from departments d,employees e where d.id=e.did and e.name ='Avinash';
+
+
+
+
+create table Bank_details (
+    id number(10) primary key,
+    account number(20)not null unique,
+    ifsc number(20) not null,
+    branch varchar2(10) not null,
+    eid number(10),
+    foreign key(eid) references employees(id),
+    created_at date default sysdate
+  )
+
+create sequence Bank_seq
+start with 1
+increment by 1
+
+insert into Bank_details( id,account,ifsc,branch,eid)
+    VALUES (Bank_seq.nextval,301,1144,'pune',1);
+
+
+
+create table Users (
+    id number(10) primary key,
+    name varchar2(20)not null,
+    username varchar2(20) not null unique,
+    password varchar2(30) not null,
+    type varchar2(30),
+    created_at date default sysdate
+  )
+
+insert into users( id,name,username,password,type)
+    VALUES (user_seq.nextval,'Harshada','harshu_11','h@123','photo');
+
+
+
+create table posts (
+    id number(10) primary key,
+    caption varchar2(200),
+    media varchar2(20),
+    type varchar2(30),
+    user_id number(20),
+    foreign key(user_id) references users(id),
+    created_at date default sysdate
+  )
+
+insert into posts( id,caption,media,type,user_id)
+    VALUES (post_seq.nextval,'no caption','image','photo',4)
+
+create table comments (
+    id number(10) primary key,
+    user_id number(20),
+    post_id number(20),
+    message varchar2(40),
+    foreign key(user_id) references users(id),
+    foreign key(post_id) references posts(id),
+    created_at date default sysdate
+  )
+insert into comments( id,user_id,post_id,message)
+    VALUES (comment_seq.nextval,1,3,'great_time')
+
+
+create sequence user_seq
+start with 1
+increment by 1
+
+create sequence post_seq
+start with 1
+increment by 1
+
+create sequence comment_seq
+start with 1
+increment by 1
+
+1.fetch all the comments done by username Avi_01
+
+select c.id as comment_id,u.id as user_id,c.message,u.username 
+ from  comments c,users u
+ where u.id=c.id
+ ;
+
+ select c.id as comment_id,u.id as user_id,c.message,u.username
+  2  from  comments c,users u
+  3  where u.id=c.id
+  4  and u.username='Avi_01';
+
+2. fetch all the comments for posts done by [saurabh]
+
+select p.id,c.message from
+users u,posts p,comments c
+where u.id=p.user_id
+and p.id=c.post_id
+and u.username='Avi_01';
+
+3. fetch all the posts on which a user has commented
+
+ select c.id as comment_id,p.id as post_id,u.id as user_id,c.message,u.username from
+ users u, posts p,comments c
+ where u.id=c.user_id
+ and p.id= c.post_id
+ and u.name ='Harshada';
+
+-------------------------------------Assignments question day 3--------------------------------------
+
+1. Fetch the comment and commenter of a single post posted by saurabh.
+ 
+   select c.message,c.user_id as commenter_id,p.id from users u,comments c,posts p
+    where u.id=p.user_id
+    and   p.id=c.post_id
+    and u.name='Avinash';
+ 
+2. Fetch the commenters of all the posts which were posted on 24th feb 2023.
+  
+   select c.user_id,c.message,u.name from
+   comments c,users u,posts p
+   where u.id=c.user_id 
+   and p.id =c.post_id
+   and TRUNC(p.created_at)='16-OCT-23';
+
+
+
+3. Fetch the users whose account was created on 24th october 2023
+
+  select name,id from users where TRUNC(created_at)='16-OCT-23';
+
+4.Fetch the caption of the posts posted by rahul.
+
+ select p.caption from 
+ posts p, users u
+ where u.id = p.user_id
+ and u.name='Harshada';
+
+
+5. fetch all the posts where the commenter is itself the poster. 
+
+    select u.id as user_id,p.id, u.name,c.message ,C.USER_ID from 
+    posts p, users u, comments c
+    where u.id = p.user_id
+    and  p.id= c.post_id
+    and u.id=c.user_id;
+
+----------------------------------------------day4--------------------------------------------------------
+
+declare 
+
+num1 number(2) := &num1;
+num2 number(2) := &num2;
+Add number(2);
+sub number(2);
+mul number(2);
+div number(2);
+
+begin
+
+Add := num1+num2;
+sub := num1-num2;
+mul := num1*num2;
+div := num1/num2;
+
+dbms_output.put_line('the sum is '||Add);
+dbms_output.put_line('the subtraction is  '||sub);
+dbms_output.put_line('the multiplication is '||mul);
+dbms_output.put_line('the division is '||div);
+
+end;
+/
+
+
+declare
+vname employees.name%type;
+vcity employees.city%type;
+vemail employees.email%type;
+vsal employees.salary%type;
+vannual_salary employees.salary%type;
+
+begin
+ select name,city,email,salary into vname,vcity,vemail,vsal
+ from employees 
+ where id =4;
+
+vannual_salary := vsal *12;
+
+
+dbms_output.put_line('the name is '|| vname);
+dbms_output.put_line('the city is '|| vcity);
+dbms_output.put_line('the email is '|| vemail);
+dbms_output.put_line('the salary is '|| vsal);
+dbms_output.put_line('the annual salary is '|| vannual_salary);
+
+end;
+
+
+declare 
+
+salary number(20) := &salary;
+tax_per number(20);
+tax_total number(10);
+
+begin
+
+if(salary >11000) then
+tax_per := 25;
+elsif ( salary>6000) then
+tax_per :=15;
+elsif(salary>4000) then
+ tax_per := 8;
+else
+ dbms_output.put_line('no tax ');
+end if;
+
+tax_total :=(salary* tax_per)/100;
+
+dbms_output.put_line('salary '||salary);
+dbms_output.put_line('tax % '||tax_per);
+dbms_output.put_line('tax amount '||tax_total);
+
+end;
+
+
+declare 
+n number(2) := &n;
+i number(2) := 1;
+begin 
+   loop
+        dbms_output.put_line(n*i);
+        i := i+1;
+        if( i>10) then 
+         exit;
+        end if;
+    end loop;
+
+dbms_output.put_line('after loop');
+
+end;
+
+
+declare
+    
+      type numberfiveEles is varray(5) of number(2);
+       num numberfiveEles;
+       add number(2) := 0;
+begin
+       num := numberfiveEles(5,6,2,4,8);
+         for i in 1..num.count loop
+            add := add + num(i);
+         end loop;
+dbms_output.put_line('sum '|| add);
+ end;
+
+  
+Explicit cursor
+
+--------------------------day5 --------------------------------
+declare
+
+cursor c_users is select name, username,password from users;
+v_name users.name%type;
+v_username users.username%type;
+v_password users.password%type;
+
+begin
+
+open c_users;
+
+loop
+ fetch  c_users into v_name,v_username,v_password;
+ exit when c_users%notfound = true;
+  
+dbms_output.put_line(v_name||' '||v_username||' '|| v_password);
+
+end loop;
+
+
+close c_users;
+
+end;          
+
+*** using records***
+
+declare
+
+cursor c_users is select *from users;
+user users%rowtype;
+begin
+
+open c_users;
+
+loop
+ fetch  c_users into user;
+ exit when c_users%notfound = true;
+  
+dbms_output.put_line(user.name||' '||user.username||' '|| user.password);
+
+end loop;
+
+
+close c_users;
+
+end;          
+
+
+create or replace procedure getop(n1 in number,n2 in number)
+as 
+begin
+dbms_output.put_line('sqr n1  ' || n1*n1 ||'cube of n2  '|| n2*n2*n2);
+end;
+/
+
+create or replace procedure getinfo(eid in number,emp out employees%rowtype)
+as 
+begin
+select * into emp from employees where id=eid;
+end;
+/
+declare
+eid employees.id%type := &eid;
+emp employees%rowtype;
+begin 
+
+getinfo(eid,emp);
+
+dbms_output.put_line(emp.name||' '||emp.salary);
+end;
+/
+
+create or replace procedure getemp(eid in number,ename out employees.name%type,esalary out employees.salary%type)
+as 
+begin
+select name,salary into ename,esalary from employees where id=eid;
+end;
+/
+
+declare
+eid employees.id%type := &eid;
+ename employees.name%type;
+esalary employees.salary%type;
+begin 
+
+getemp(eid,ename,esalary);
+
+dbms_output.put_line(ename||' '||esalary);
+end;
+/
+
+
+ *** function***
+
+create or replace function getdata(ename in varchar2) return employees.email%type
+is
+Nemail employees.email%type;
+begin
+select email into Nemail from employees where name=ename;
+return Nemail;
+end;
+/
+
+declare
+a employees.email%type;
+begin
+a := getdata('Mayuri');
+dbms_output.put_line(a);
+end;
+/
+-------------------------------------------------------------------------------
+create or replace function getsal(eusername in varchar2) return employees.salary%type
+is
+Nsalary employees.salary%type;
+begin
+select salary into Nsalary from employees where name=eusername;
+return Nsalary*0.10;
+end;
+/
+
+declare
+a employees.salary%type;
+begin
+a := getsal('Mayuri');
+dbms_output.put_line(a);
+end;
+/
+
+*** triggered***
+
+
+
+create or replace trigger displayUpdateMessage
+after update on employees
+for each row
+declare
+a employees.salary%type:=  :old.salary;
+b employees.salary%type :=  :new.salary;
+
+begin
+dbms_output.put_line(a||' '||b||' '||'differance between salary'||'  '||(b-a));
+end;
+
